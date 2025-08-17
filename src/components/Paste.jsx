@@ -10,18 +10,23 @@ const Paste = () => {
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
-  const[link,setLink]=useState("");
+  // const[link,setLink]=useState("");
 
   const handleDelete = (id) => {
     dispatch(removeFromPastes(id));
   };
- const handleshare= (id) => {
-  setLink(`${window.location.origin}/?pasteId=${id}`) ;
-  navigator.clipboard.writeText(link);
- 
-  toast.success("Link copied to clipboard!");
+ const handleshare = (id) => {
+  const link = `${window.location.origin}/?pasteId=${id}`;
+  
+  navigator.clipboard.writeText(link)
+    .then(() => {
+      toast.success("Link copied to clipboard!");
+    })
+    .catch(() => {
+      toast.error("Failed to copy link");
+    });
+};
 
- }
   // Filter pastes based on search term (by title or content)
   const filteredPastes = pastes.filter((paste) =>
     paste.title.toLowerCase().includes(searchTerm.toLowerCase())
