@@ -4,19 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react"; // Import useState
 import { removeFromPastes } from "../redux/pasteSlice";
 import { FormatDate } from "../utlis/formatDate";
+import { Link } from "react-router-dom";
 
 const Paste = () => {
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
-  const[Link,setLink]=useState("");
+  const[link,setLink]=useState("");
 
   const handleDelete = (id) => {
     dispatch(removeFromPastes(id));
   };
  const handleshare= (id) => {
   setLink(`${window.location.origin}/?pasteId=${id}`) ;
-  navigator.clipboard.writeText(Link);
+  navigator.clipboard.writeText(link);
  
   toast.success("Link copied to clipboard!");
 
@@ -100,12 +101,12 @@ const Paste = () => {
                       </button>
 
                       <button className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-orange-500">
-                        <a href={`/pastes/${paste?._id}`} target="_blank">
+                        <Link to={`/pastes/${paste?._id}`} target="_blank" >
                           <Eye
                             className="text-black group-hover:text-orange-500"
                             size={20}
                           />
-                        </a>
+                        </Link>
                       </button>
                       <button
                         className="p-2 rounded-[0.2rem] bg-white border border-[#c7c7c7]  hover:bg-transparent group hover:border-green-500"
