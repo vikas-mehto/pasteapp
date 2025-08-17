@@ -16,7 +16,7 @@ const Home = () => {
   const createPaste = () => {
   if (!title.trim()) {
     toast.error("Title is required to create a paste!", {
-      position: "top-right",
+      
     });
     return;
   }
